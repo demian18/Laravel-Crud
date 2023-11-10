@@ -19,7 +19,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'content' => $this->faker->paragraph,
+            'body' => $this->faker->paragraph,
             'category_id' => Category::factory(),
         ];
     }
