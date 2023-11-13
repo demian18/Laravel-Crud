@@ -36,6 +36,11 @@
                                 <p>Опубликовано в категории: <span
                                         class="badge bg-secondary">{{ $post->category->name }}</span></p>
 
+                                <p>Tags:
+                                    @foreach($post->tags as $tag)
+                                        <span class="badge bg-dark">{{$tag->name}}</span>
+                                    @endforeach
+                                </p>
                                 @auth()
                                     <a href="{{ route('admin.posts.edit', $post->id) }}"
                                        class="btn btn-primary">Редактировать</a>

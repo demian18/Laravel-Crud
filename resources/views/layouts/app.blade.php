@@ -67,6 +67,9 @@
                         <a class="nav-link" href="{{ route('admin.categories.index') }}" role="button">
                             Категории
                         </a>
+                        <a class="nav-link" href="{{ route('admin.tags.index') }}" role="button">
+                            Теги
+                        </a>
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

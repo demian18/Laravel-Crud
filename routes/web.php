@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::get('posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::group(['middleware'=>'auth', 'prefix'=>'admin', 'as'=>'admin.'], function () {
     Route::resource('comments', CommentController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('tags', TagController::class);
     Route::resource('posts', PostController::class);
 });
 

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $postCount = Post::count();
-        $posts = Post::with('category', 'tags')->get();
-        $tags = $posts->pluck('tags')->flatten()->unique();
-
-        return view('posts.index', compact('posts', 'postCount', 'tags'));
+        $tags = Tag::all();
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -29,10 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $posts = Post::with('category')->get();
-        $tags = Tag::all();
-        $postTags = [];
-        return view('admin.posts.create', compact('posts', 'tags', 'postTags'));
+        return view('admin.tags.create');
     }
 
     /**
@@ -44,29 +37,23 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'title' => 'required',
-           'body' => 'required',
-           'category_id' => 'required',
+           'name'=>'required',
         ]);
-        $post = new Post();
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->category_id = $request->category_id;
-        $post->save();
-        $post->tags()->attach($request->tags);
-        return redirect('/posts')->with('success', 'Пост успешно создан!');
+        $tag = new Tag();
+        $tag->name = $request->name;
+        $tag->save();
+        return redirect('/admin/tags')->with('success', 'Тег успешно создан!');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $post = Post::with('category', 'comment')->findOrFail($id);
-        return view('posts.show', compact('post'));
+        //
     }
 
     /**
@@ -77,8 +64,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
-        return view('admin.posts.edit', compact('post'));
+        $tag = Tag::findOrFail($id);
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -91,27 +78,24 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-           'title' => 'required',
-           'body' => 'required',
+           'name'=>'required',
         ]);
-        $post = Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->save();
-        $post->tags()->sync($request->tags);
-        return redirect('/posts')->with('success','Пост успешно отредактирован!');
+        $tag = Tag::findOrFail($id);
+        $tag->name = $request->name;
+        $tag->save();
+        return redirect('/admin/tags')->with('success', 'Тег успешно обновлен!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
-        return redirect('/posts')->with('success','Пост успешно удален!');
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
+        return redirect('/admin/tags')->with('success', 'Тег успешно удален!');
     }
 }
