@@ -28,7 +28,7 @@ class PostController extends Controller
     public function create()
     {
         $posts = Post::with('category')->get();
-        return view('posts.create', compact('posts'));
+        return view('admin.posts.create', compact('posts'));
     }
 
     /**
@@ -73,7 +73,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**

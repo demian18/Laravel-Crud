@@ -1,26 +1,10 @@
-@extends('layouts.app')
+@extends('welcome')
 @section('content')
     <div class="container mt-4">
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        <h1>Posts</h1>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            @if(isset($postCount))
-                <div>
-                    Количество постов: <span class="badge bg-primary">{{$postCount}}</span>
-                </div>
-            @else
-                <h2>Кол-во постов не обнаружено</h2>
-            @endif
-            @auth()
-                <div>
-                    <a href="{{route('admin.posts.create')}}" class="btn btn-primary">Создать пост</a>
-                </div>
-            @endauth
-        </div>
+        <h1>Последние посты</h1>
+        @auth()
+            <a href="{{ route('posts.create') }}" class="btn btn-primary">Создать</a>
+        @endauth
         <div class="row">
             @if(isset($posts))
                 @foreach($posts as $post)
@@ -31,15 +15,15 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">{{ Str::limit($post->body) }}</p>
-                                <a href="{{ route('admin.posts.show', $post->id) }}"
+                                <a href="{{ route('posts.show', $post->id) }}"
                                    class="btn btn-primary mb-3">Подглядеть</a>
                                 <p>Опубликовано в категории: <span
                                         class="badge bg-secondary">{{ $post->category->name }}</span></p>
 
                                 @auth()
-                                    <a href="{{ route('admin.posts.edit', $post->id) }}"
+                                    <a href="{{ route('posts.edit', $post->id) }}"
                                        class="btn btn-primary">Редактировать</a>
-                                    <form action="admin/posts/{{$post->id}}" method="post" class="d-inline">
+                                    <form action="posts/{{$post->id}}" method="post" class="d-inline">
                                         {{ csrf_field() }}
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Удалить</button>

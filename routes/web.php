@@ -18,13 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $posts = \App\Models\Post::with('category', 'comment')->take(3)->latest()->get();
+    return view('pages.home', compact('posts'));
 });
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('posts/{id}', [PostController::class, 'show'])->name('posts.show');
 
-Route::resource('posts',PostController::class);
-Route::resource('comments',CommentController::class);
-Route::resource('categories',CategoryController::class);
+Route::group(['middleware'=>'auth', 'prefix'=>'admin', 'as'=>'admin.'], function () {
+    Route::resource('comments', CommentController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('posts', PostController::class);
+});
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
