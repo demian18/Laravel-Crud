@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">{{ Str::limit($post->body) }}</p>
-                                <a href="{{ route('admin.posts.show', $post->id) }}"
+                                <a href="{{ route('posts.show', $post->id) }}"
                                    class="btn btn-primary mb-3">Подглядеть</a>
                                 <p>Опубликовано в категории: <span
                                         class="badge bg-secondary">{{ $post->category->name }}</span></p>

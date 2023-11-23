@@ -25,8 +25,9 @@ Route::get('/', function () {
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('posts/{id}', [PostController::class, 'show'])->name('posts.show');
 
+Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
+
 Route::group(['middleware'=>'auth', 'prefix'=>'admin', 'as'=>'admin.'], function () {
-    Route::resource('comments', CommentController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
     Route::resource('posts', PostController::class);
