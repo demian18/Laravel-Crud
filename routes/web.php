@@ -35,4 +35,4 @@ Route::group(['middleware'=>'auth', 'prefix'=>'admin', 'as'=>'admin.'], function
 
 Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('posts');

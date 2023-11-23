@@ -17,8 +17,8 @@
 
                 <label>Категория поста: </label>
                 <select name="category_id">
-                    @foreach($posts as $post)
-                        <option value="{{$post->category->id}}">{{$post->category->name}}</option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
 

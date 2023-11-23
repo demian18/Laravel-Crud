@@ -3,7 +3,7 @@
     <div class="container mt-4">
         <h1>Последние посты</h1>
         @auth()
-            <a href="{{ route('posts.create') }}" class="btn btn-primary">Создать</a>
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Создать</a>
         @endauth
         <div class="row">
             @if(isset($posts))
@@ -21,7 +21,7 @@
                                         class="badge bg-secondary">{{ $post->category->name }}</span></p>
 
                                 @auth()
-                                    <a href="{{ route('posts.edit', $post->id) }}"
+                                    <a href="{{ route('admin.posts.edit', $post->id) }}"
                                        class="btn btn-primary">Редактировать</a>
                                     <form action="posts/{{$post->id}}" method="post" class="d-inline">
                                         {{ csrf_field() }}
